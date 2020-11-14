@@ -9,5 +9,7 @@ namespace ToeicExamOnline.Services.Interface
     public interface ILoginService
     {
         public bool login(User user);
+
+        public bool register(User user);
     }
 }

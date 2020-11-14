@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ToeicExamOnline.Repositories.ConnectionDB
 {
     public class ConnectDB
     {
-        private string connectionString = "Server=localhost;Port=3306;Database=toeicexam;Uid=root;Pwd=Lexuanhung123.;";
+        private string connectionString = "Server=MYSQL5032.site4now.net;Database=db_a6a606_toeicdb;Uid=a6a606_toeicdb;Pwd=12345678@Abc";
         private MySqlConnection mySqlConnection;
         private MySqlCommand mysqlCommand;
         public ConnectDB() {
@@ -54,6 +55,25 @@ namespace ToeicExamOnline.Repositories.ConnectionDB
             }
             mySqlConnection.Close();
             return isExist;
+        }
+
+        public bool createAccount(User user)
+        {
+            if (checkExistUser(user) == false)
+            {
+                mySqlConnection.Open();
+                mysqlCommand.CommandText = "INSERT INTO User(UserName, Password)  VALUES(@param1, @param2)";
+                mysqlCommand.Parameters.AddWithValue("@param1", user.UserName);
+                mysqlCommand.Parameters.AddWithValue("@param2", user.Password);
+                mysqlCommand.ExecuteNonQuery();
+                mySqlConnection.Close();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
     }
 }

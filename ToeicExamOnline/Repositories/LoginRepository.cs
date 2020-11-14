@@ -12,6 +12,11 @@ namespace ToeicExamOnline.Repositories
 {
     public class LoginRepository : ILoginRepository
     {
+        private readonly ConnectDB connectDB;
+        public LoginRepository()
+        {
+            connectDB = new ConnectDB();
+        }
         public bool login(User user)
         {
             //string connectionString = "Server=localhost;Port=3306;Database=toeicexam;Uid=root;Pwd=Lexuanhung123.;";
@@ -33,10 +38,12 @@ namespace ToeicExamOnline.Repositories
             //        var value = sqlDataReader.GetValue(i);
             //    }
             //}
-
-            ConnectDB connectDB = new ConnectDB();
             return connectDB.checkExistUser(user);
-            //return "Vào";
+        }
+
+        public bool register(User user)
+        {
+            return connectDB.createAccount(user);
         }
     }
 }

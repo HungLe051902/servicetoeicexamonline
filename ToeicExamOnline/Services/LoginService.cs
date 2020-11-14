@@ -20,15 +20,12 @@ namespace ToeicExamOnline.Services
         {
             var res = _loginRepository.login(user);
             return res;
-            //if (user.UserName == "test" && user.Password == "123456")
-            //{
-            //    return "Đăng nhập thành công!";
-            //}
-            //else
-            //{
-            //    return "Đăng nhập thất bại";
-            //}
+        }
 
+        public bool register(User user)
+        {
+            var res = _loginRepository.register(user);
+            return res;
         }
     }
 }
