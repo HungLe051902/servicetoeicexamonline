@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using ToeicExamOnline.Repositories;
 using ToeicExamOnline.Repositories.Interfaces;
 using ToeicExamOnline.Services;
@@ -30,7 +31,12 @@ namespace ToeicExamOnline
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(o =>
+                {
+                    o.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    o.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                });
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ILoginRepository, LoginRepository>();
         }

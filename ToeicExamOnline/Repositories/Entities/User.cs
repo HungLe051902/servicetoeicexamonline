@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ToeicExamOnline.Repositories.Entities
 {
-    public class User { 
-        public string  UserName { get; set; }
+    public class User
+    {
+        public string UserName { get; set; }
         public string Password { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace ToeicExamOnline.Repositories.Interfaces
 {
     public interface ILoginRepository
     {
-        public bool login(User user);
+        public ActionServiceResult login(User user);
 
-        public bool register(User user);
+        public ActionServiceResult register(User user);
     }
 }

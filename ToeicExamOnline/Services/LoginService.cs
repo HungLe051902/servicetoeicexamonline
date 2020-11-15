@@ -16,13 +16,13 @@ namespace ToeicExamOnline.Services
         {
             _loginRepository = loginRepository;
         }
-        public bool login(User user)
+        public ActionServiceResult login(User user)
         {
             var res = _loginRepository.login(user);
             return res;
         }
 
-        public bool register(User user)
+        public ActionServiceResult register(User user)
         {
             var res = _loginRepository.register(user);
             return res;

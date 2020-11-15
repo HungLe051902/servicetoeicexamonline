@@ -12,38 +12,64 @@ namespace ToeicExamOnline.Repositories
 {
     public class LoginRepository : ILoginRepository
     {
-        private readonly ConnectDB connectDB;
         public LoginRepository()
         {
-            connectDB = new ConnectDB();
         }
-        public bool login(User user)
+        public ActionServiceResult login(User user)
         {
-            //string connectionString = "Server=localhost;Port=3306;Database=toeicexam;Uid=root;Pwd=Lexuanhung123.;";
-            //// Khởi tạo sql connection
-            //MySqlConnection sqlConnection = new MySqlConnection(connectionString);
-            //MySqlCommand sqlCommand = sqlConnection.CreateCommand();
-            //sqlCommand.CommandText = "SELECT * FROM User";
-
-            ////Mở kết nối
-            //sqlConnection.Open();
-
-            //MySqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-
-            //while (sqlDataReader.Read())
-            //{
-            //    for (int i = 0; i<sqlDataReader.FieldCount; i++)
-            //    {
-            //        var colName = sqlDataReader.GetName(i);
-            //        var value = sqlDataReader.GetValue(i);
-            //    }
-            //}
-            return connectDB.checkExistUser(user);
+            bool result = false;
+            using (var databaseConnector = new DatabaseConnector<User>())
+            {
+                var listUser = databaseConnector.getData("Proc_GetAllUser");
+                foreach (User usr in listUser)
+                {
+                    if (usr.UserName == user.UserName && usr.UserName == user.Password)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            if (result == true)
+            {
+                return new ActionServiceResult(200, "Đăng nhập thành công", result);
+            }
+            else
+            {
+                return new ActionServiceResult(600, "Thông tin sai", result);
+            }
         }
 
-        public bool register(User user)
+        public ActionServiceResult register(User user)
         {
-            return connectDB.createAccount(user);
+            bool isExistAccount = false;
+            using (var databaseConnector = new DatabaseConnector<User>())
+            {
+                var listUser = databaseConnector.getData("Proc_GetAllUser");
+                foreach (User usr in listUser)
+                {
+                    if (usr.UserName == user.UserName)
+                    {
+                        isExistAccount = true;
+                        break;
+                    }
+                }
+            }
+            if (isExistAccount == true)
+            {
+                return new ActionServiceResult(601, "Đã có tài khoản này trên hệ thống", !isExistAccount);
+            }
+            else
+            {
+                using(var databaseConnector = new DatabaseConnector<User>())
+                {
+                    List<MySqlParameter> list = new List<MySqlParameter>();
+                    list.Add(new MySqlParameter("@UserName", user.UserName));
+                    list.Add(new MySqlParameter("@Password", user.Password));
+                    databaseConnector.insertToDB("Proc_CreateAccount", list);
+                }
+                return new ActionServiceResult(200, "Đăng ký thành công", !isExistAccount);
+            }
         }
     }
 }

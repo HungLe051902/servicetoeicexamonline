@@ -38,7 +38,7 @@ namespace ToeicExamOnline.Controllers
         // POST api/<LoginController>
         [HttpPost]
         [Route("/api/[controller]/login")]
-        public bool Login([FromBody] User user)
+        public ActionServiceResult Login([FromBody] User user)
         {
             var res = _loginServiceInterface.login(user);
             return res;
@@ -46,7 +46,7 @@ namespace ToeicExamOnline.Controllers
 
         [HttpPost]
         [Route("/api/[controller]/register")]
-        public bool Register([FromBody] User user)
+        public ActionServiceResult Register([FromBody] User user)
         {
             var res = _loginServiceInterface.register(user);
             return res;
