@@ -15,6 +15,7 @@ using ToeicExamOnline.Repositories;
 using ToeicExamOnline.Repositories.Interfaces;
 using ToeicExamOnline.Services;
 using ToeicExamOnline.Services.Interface;
+using ToeicExamOnline.Services.Interfaces;
 
 namespace ToeicExamOnline
 {
@@ -39,6 +40,9 @@ namespace ToeicExamOnline
                 });
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ILoginRepository, LoginRepository>();
+
+            services.AddScoped<IToeicExamService, ToeicExamService>();
+            services.AddScoped<IToeicExamRepository, ToeicExamRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
