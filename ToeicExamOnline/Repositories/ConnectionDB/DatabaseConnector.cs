@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 using ToeicExamOnline.Repositories.Entities;
 
 namespace ToeicExamOnline.Repositories.ConnectionDB
 {
-    public class DatabaseConnector<T>:IDisposable where T : new()
+    public class DatabaseConnector<T> : IDisposable where T : new()
     {
         private string connectionString = "Server=MYSQL5032.site4now.net;Database=db_a6a606_toeicdb;Uid=a6a606_toeicdb;Pwd=12345678@Abc";
         private MySqlConnection mySqlConnection;
         private MySqlCommand mysqlCommand;
-        public DatabaseConnector() {
+        public DatabaseConnector()
+        {
             mySqlConnection = new MySqlConnection(connectionString);
             mysqlCommand = mySqlConnection.CreateCommand();
             mysqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
@@ -74,6 +72,30 @@ namespace ToeicExamOnline.Repositories.ConnectionDB
             }
             return lists;
         }
+
+        public Task<IEnumerable<T>> getDataWithParams(string storeProcedureName, List<MySqlParameter> listParam)
+        {
+            List<T> lists = new List<T>();
+            mysqlCommand.CommandText = storeProcedureName;
+            mysqlCommand.Parameters.AddRange(listParam.ToArray<MySqlParameter>());
+            MySqlDataReader mysqlDataReader = mysqlCommand.ExecuteReader();
+            while (mysqlDataReader.Read())
+            {
+                T obj = new T();
+                for (int i = 0; i < mysqlDataReader.FieldCount; i++)
+                {
+                    var colName = mysqlDataReader.GetName(i);
+                    var value = mysqlDataReader.GetValue(i);
+                    var property = obj.GetType().GetProperty(colName);
+                    if (property != null)
+                    {
+                        property.SetValue(obj, value);
+                    }
+                }
+                lists.Add(obj);
+            }
+            return Task.FromResult(lists.AsEnumerable());
+        }
         public bool checkExistUser(User user)
         {
             mySqlConnection.Open();
@@ -111,7 +133,7 @@ namespace ToeicExamOnline.Repositories.ConnectionDB
             {
                 return false;
             }
-            
+
         }
 
         public void Dispose()

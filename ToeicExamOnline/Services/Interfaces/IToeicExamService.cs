@@ -8,5 +8,7 @@ namespace ToeicExamOnline.Services.Interfaces
     public interface IToeicExamService
     {
         public ActionServiceResult GetListExam();
+
+        public ActionServiceResult GetQuestionPart1ByYearAndExamNo(int year, int examNo);
     }
 }

@@ -25,10 +25,10 @@ namespace ToeicExamOnline.Controllers
         }
 
         [HttpGet]
-        [Route("api/ToeicExam/list")]
-        public IEnumerable<string> Get()
+        [Route("/api/ToeicExam/exam/part1")]
+        public ActionServiceResult GetQuestionPart1ByYearAndExamNo(int year, int examNo)
         {
-            return new string[] { "value1", "value2" };
+            return _toeicExamServiceInterface.GetQuestionPart1ByYearAndExamNo(year, examNo);
         }
 
         [HttpGet("{id}")]
