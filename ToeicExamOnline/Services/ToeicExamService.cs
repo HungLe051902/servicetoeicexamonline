@@ -24,5 +24,11 @@ namespace ToeicExamOnline.Services
             var res = _toeicExamRepositoryInterface.GetQuestionPart1ByYearAndExamNo(year, examNo);
             return res.Result;
         }
+
+        public ActionServiceResult GetQuestionPart2ByYearAndExamNo(int year, int examNo)
+        {
+            var res = _toeicExamRepositoryInterface.GetQuestionPart2ByYearAndExamNo(year, examNo);
+            return res.Result;
+        }
     }
 }
