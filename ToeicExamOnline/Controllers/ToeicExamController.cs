@@ -17,6 +17,8 @@ namespace ToeicExamOnline.Controllers
         {
             _toeicExamServiceInterface = toeicExamServiceInterface;
         }
+
+        // Lấy thông tin tất cả các đề thi
         [HttpGet]
         [Route("/api/ToeicExam/exam")]
         public ActionServiceResult GetAllExam()
@@ -24,6 +26,7 @@ namespace ToeicExamOnline.Controllers
             return _toeicExamServiceInterface.GetListExam();
         }
 
+        // Lấy câu hỏi part1
         [HttpGet]
         [Route("/api/ToeicExam/exam/part1")]
         public ActionServiceResult GetQuestionPart1ByYearAndExamNo(int year, int examNo)
@@ -31,11 +34,28 @@ namespace ToeicExamOnline.Controllers
             return _toeicExamServiceInterface.GetQuestionPart1ByYearAndExamNo(year, examNo);
         }
 
+        // Lấy câu hỏi part2
         [HttpGet]
         [Route("/api/ToeicExam/exam/part2")]
         public ActionServiceResult GetQuestionPart2ByYearAndExamNo(int year, int examNo)
         {
             return _toeicExamServiceInterface.GetQuestionPart2ByYearAndExamNo(year, examNo);
+        }
+
+        // Lấy câu hỏi part3
+        [HttpGet]
+        [Route("/api/ToeicExam/exam/part3")]
+        public ActionServiceResult GetQuestionPart3ByYearAndExamNo(int year, int examNo)
+        {
+            return _toeicExamServiceInterface.GetQuestionPart3ByYearAndExamNo(year, examNo);
+        }
+
+        // Lấy câu hỏi part4
+        [HttpGet]
+        [Route("/api/ToeicExam/exam/part4")]
+        public ActionServiceResult GetQuestionPart4ByYearAndExamNo(int year, int examNo)
+        {
+            return _toeicExamServiceInterface.GetQuestionPart4ByYearAndExamNo(year, examNo);
         }
 
         [HttpGet("{id}")]
