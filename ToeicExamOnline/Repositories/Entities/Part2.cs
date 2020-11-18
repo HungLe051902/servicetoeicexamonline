@@ -17,6 +17,6 @@ namespace ToeicExamOnline.Repositories.Entities
         public string OptionC { get; set; }
         public string OptionD { get; set; }
         public string Answer { get; set; }
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
     }
 }

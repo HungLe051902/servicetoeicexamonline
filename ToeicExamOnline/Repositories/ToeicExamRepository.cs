@@ -34,7 +34,7 @@ namespace ToeicExamOnline.Repositories
 
         public async Task<ActionServiceResult> GetQuestionPart2ByYearAndExamNo(int year, int examNo)
         {
-            using (var databaseConnector = new DatabaseConnector<Part1>())
+            using (var databaseConnector = new DatabaseConnector<Part2>())
             {
                 List<MySqlParameter> list = new List<MySqlParameter>();
                 list.Add(new MySqlParameter("@Year", year));
