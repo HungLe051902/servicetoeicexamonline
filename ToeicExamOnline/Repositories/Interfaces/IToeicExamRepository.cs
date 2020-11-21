@@ -16,5 +16,6 @@ namespace ToeicExamOnline.Repositories.Interfaces
         public Task<ActionServiceResult> GetQuestionPart4ByYearAndExamNo(int year, int examNo);
         public Task<ActionServiceResult> GetQuestionPart5ByYearAndExamNo(int year, int examNo);
         public Task<ActionServiceResult> GetQuestionPart6ByYearAndExamNo(int year, int examNo);
+        public Task<ActionServiceResult> GetQuestionPart7ByYearAndExamNo(int year, int examNo);
     }
 }

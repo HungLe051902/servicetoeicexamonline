@@ -74,6 +74,15 @@ namespace ToeicExamOnline.Controllers
             return _toeicExamServiceInterface.GetQuestionPart6ByYearAndExamNo(year, examNo);
         }
 
+        // Lấy câu hỏi part7
+        [HttpGet]
+        [Route("/api/ToeicExam/exam/part7")]
+        public ActionServiceResult GetQuestionPart7ByYearAndExamNo(int year, int examNo)
+        {
+            return _toeicExamServiceInterface.GetQuestionPart7ByYearAndExamNo(year, examNo);
+        }
+
+
         [HttpGet("{id}")]
         public string Get(int id)
         {
