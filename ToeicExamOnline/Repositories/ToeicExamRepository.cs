@@ -79,5 +79,17 @@ namespace ToeicExamOnline.Repositories
                 return new ActionServiceResult(200, "Lấy dữ liệu câu hỏi part5 thành công", data);
             }
         }
+
+        public async Task<ActionServiceResult> GetQuestionPart6ByYearAndExamNo(int year, int examNo)
+        {
+            using (var databaseConnector = new DatabaseConnector<Part6>())
+            {
+                List<MySqlParameter> list = new List<MySqlParameter>();
+                list.Add(new MySqlParameter("@Year", year));
+                list.Add(new MySqlParameter("@ExamNo", examNo));
+                var data = await databaseConnector.getDataWithParams("Proc_GetQuestionPart6ByYearAndExamNo", list);
+                return new ActionServiceResult(200, "Lấy dữ liệu câu hỏi part6 thành công", data);
+            }
+        }
     }
 }

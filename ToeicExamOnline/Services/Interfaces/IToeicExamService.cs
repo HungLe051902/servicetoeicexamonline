@@ -14,6 +14,7 @@ namespace ToeicExamOnline.Services.Interfaces
         public ActionServiceResult GetQuestionPart3ByYearAndExamNo(int year, int examNo);
         public ActionServiceResult GetQuestionPart4ByYearAndExamNo(int year, int examNo);
         public ActionServiceResult GetQuestionPart5ByYearAndExamNo(int year, int examNo);
+        public ActionServiceResult GetQuestionPart6ByYearAndExamNo(int year, int examNo);
 
     }
 }
