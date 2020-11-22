@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ToeicExamOnline.Helpers;
 using ToeicExamOnline.Repositories.ConnectionDB;
 using ToeicExamOnline.Repositories.Entities;
 using ToeicExamOnline.Repositories.Interfaces;
@@ -23,7 +24,7 @@ namespace ToeicExamOnline.Repositories
                 var listUser = databaseConnector.getData("Proc_GetAllUser");
                 foreach (User usr in listUser)
                 {
-                    if (usr.UserName == user.UserName && usr.UserName == user.Password)
+                    if (usr.UserName == user.UserName && usr.Password == LoginHelper.MD5Hash(user.Password))
                     {
                         result = true;
                         break;
@@ -65,7 +66,7 @@ namespace ToeicExamOnline.Repositories
                 {
                     List<MySqlParameter> list = new List<MySqlParameter>();
                     list.Add(new MySqlParameter("@UserName", user.UserName));
-                    list.Add(new MySqlParameter("@Password", user.Password));
+                    list.Add(new MySqlParameter("@Password", LoginHelper.MD5Hash(user.UserName)));
                     databaseConnector.insertToDB("Proc_CreateAccount", list);
                 }
                 return new ActionServiceResult(200, "Đăng ký thành công", !isExistAccount);
