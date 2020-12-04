@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using ToeicExamOnline.Authorization;
 using ToeicExamOnline.Helpers;
 using ToeicExamOnline.Repositories.ConnectionDB;
 using ToeicExamOnline.Repositories.Entities;
@@ -13,12 +14,15 @@ namespace ToeicExamOnline.Repositories
 {
     public class LoginRepository : ILoginRepository
     {
-        public LoginRepository()
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        public LoginRepository(IJwtAuthenticationManager jwtAuthenticationManager)
         {
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
         }
         public ActionServiceResult login(User user)
         {
             bool result = false;
+            string token = "";
             using (var databaseConnector = new DatabaseConnector<User>())
             {
                 var listUser = databaseConnector.getData("Proc_GetAllUser");
@@ -27,13 +31,14 @@ namespace ToeicExamOnline.Repositories
                     if (usr.UserName == user.UserName && usr.Password == LoginHelper.MD5Hash(user.Password))
                     {
                         result = true;
+                        token = jwtAuthenticationManager.Authenticate(usr);
                         break;
                     }
                 }
             }
             if (result == true)
             {
-                return new ActionServiceResult(200, "Đăng nhập thành công", result);
+                return new ActionServiceResult(200, "Đăng nhập thành công", token);
             }
             else
             {
