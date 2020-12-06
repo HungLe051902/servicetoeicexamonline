@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToeicExamOnline.Repositories.Entities;
 using ToeicExamOnline.Services.Interfaces;
 
 namespace ToeicExamOnline.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ToeicExamController : ControllerBase
