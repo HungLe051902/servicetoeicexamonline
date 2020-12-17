@@ -71,7 +71,7 @@ namespace ToeicExamOnline.Repositories
                 {
                     List<MySqlParameter> list = new List<MySqlParameter>();
                     list.Add(new MySqlParameter("@UserName", user.UserName));
-                    list.Add(new MySqlParameter("@Password", LoginHelper.MD5Hash(user.UserName)));
+                    list.Add(new MySqlParameter("@Password", LoginHelper.MD5Hash(user.Password)));
                     databaseConnector.insertToDB("Proc_CreateAccount", list);
                 }
                 return new ActionServiceResult(200, "Đăng ký thành công", !isExistAccount);
